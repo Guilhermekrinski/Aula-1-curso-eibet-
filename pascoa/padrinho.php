@@ -30,7 +30,7 @@
     if ($op=='ip'){
         ?>
         <form method="post" action="padrinho.php">
-            <input type="hidden" name = "op" value="sr">  <!-- operação de salvar padrinho -->
+            <input type="hidden" name = "op" value="sp">  <!-- operação de salvar padrinho -->
             <label for="nome">Nome:</label><br>
             <input type="text" id="nome" name="nome"><br>
             <label for="telefone">Telefone:</label><br>
@@ -79,23 +79,23 @@
         <?php        
     }
 
-    // ar - Atualizar padrinho
-        if ($op=='ap'){
-            $id = $_POST["id"];
-            $nome = $_POST["nome"];
-            $telefone = $_POST["telefone"];
-            $email = $_POST["email"];
-            
-            $sql = "UPDATE tb_padrinho SET nome='$nome',telefone='$telefone',email='$email' WHERE id=$id";
-            // echo $sql;
-            if(mysqli_query($conexao, $sql)){
-                echo "<p>Dados inseridos com sucesso";
-            } else {
-                echo "<p>Erro ao inserir dados";
-            }
+    // ap - Atualizar padrinho
+    if ($op=='ap'){
+        $id = $_POST["id"];
+        $nome = $_POST["nome"];
+        $telefone = $_POST["telefone"];
+        $email = $_POST["email"];
+        
+        $sql = "UPDATE tb_padrinho SET nome='$nome',telefone='$telefone',email='$email' WHERE id=$id";
+        // echo $sql;
+        if(mysqli_query($conexao, $sql)){
+            echo "<p>Dados atualizados com sucesso";
+        } else {
+            echo "<p>Erro ao atualizar dados";
         }
+    }
     
-    // dr - Excluir (deletar) padrinho
+    // dp - Excluir (deletar) padrinho
     if ($op=='dp'){
         $id = $_GET['id'];
         $sql = "DELETE FROM tb_padrinho WHERE id = $id";
@@ -106,8 +106,7 @@
         }
     }
 
-
-    // lr - Listar padrinho
+    // lp - Listar padrinho
     if ($op=='lp'){
         $sql =  "SELECT id,nome,telefone,email ".
                 "FROM tb_padrinho ";
@@ -123,12 +122,12 @@
             echo "<td>$padrinho[nome]</td>";
             echo "<td>$padrinho[telefone]</td>";
             echo "<td>$padrinho[email]</td>";
-            echo "<td><a href='padrinho$padrinho.php?op=er&id=$padrinho[id]'>[Editar]</td>";
-            echo "<td><a href='padrinho$padrinho.php?op=dr&id=$padrinho[id]'>[Excluir]</td>";
+            echo "<td><a href='padrinho.php?op=ep&id=$padrinho[id]'>[Editar]</a></td>";
+            echo "<td><a href='padrinho.php?op=dp&id=$padrinho[id]'>[Excluir]</a></td>";
             echo "</tr>";
         }
         echo "</table>";
-        echo "<a href='padrinho$padrinho.php?op=ip'>Incluir padrinho$padrinho</a>";
+        echo "<a href='padrinho.php?op=ip'>Incluir padrinho</a>";
     }
 
     // Fecha a conexão com o banco
